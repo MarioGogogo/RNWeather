@@ -1,10 +1,14 @@
 
  import React, {Component} from 'react';
  import {StyleSheet,Text,ListView,FlatList} from 'react-native';
+import HourlyItem from '../common/HourlyItem';
 
-import HourlyItem from '../common/HourlyItem'
+ import { inject, observer } from "mobx-react";
 
 
+
+ @inject('weatherStore')
+ @observer
  export default class HourlyForecast extends Component{
 
     // 初始化state
@@ -14,17 +18,17 @@ import HourlyItem from '../common/HourlyItem'
     }
 
    _ItemView = (item) => {
-      console.log('_ItemView',item)
      return (
-       <HourlyItem itemData={item}/>
+       <HourlyItem itemData={item.item}/>
      )
    }
 
     render(){
+        const {weatherStore} = this.props;
         return (
           <FlatList
             horizontal={true}
-            data={[1,2,3,4]}
+            data={weatherStore.hourlyDataSource.slice()}
             renderItem={this._ItemView}
           />
         );

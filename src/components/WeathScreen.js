@@ -1,8 +1,8 @@
 
  import React, {Component} from 'react';
- import {StyleSheet,Text,ImageBackground,Platform,View,DrawerLayoutAndroid,Image,ScrollView,StatusBar,NativeModules} from 'react-native';
+ import {StyleSheet,ImageBackground,ScrollView,RefreshControl} from 'react-native';
  import DrawerLayout from 'react-native-drawer-layout'
- import ApiConfig from '../config'
+
 
 import Header from './Header'
  import NavBar from "./NavBar";
@@ -12,7 +12,12 @@ import DailyForecast from './DailyForecast'
 import LifeSuggestion from './LifeSuggestion'
 import AirCondition from './AirCondition'
 
+ import {observer,inject} from 'mobx-react/native'
+ import weatherStore from '../store/weatherStore'
 
+
+
+ @observer
  export default class WeatherScreen extends Component{
 
     // 初始化state
@@ -23,8 +28,14 @@ import AirCondition from './AirCondition'
 
     // 加载后
     componentDidMount() {
+      this._refreshWeatherData();
         console.log('componentDidMount')
     }
+
+
+   _refreshWeatherData=()=>{
+     weatherStore.allSyncGet("杭州")
+   }
 
     render(){
 
@@ -37,7 +48,14 @@ import AirCondition from './AirCondition'
                 <ScrollView
                   style={styles.transparentBackgroud}
                   scrollEventThrottle={200}
-                >
+                  showsVerticalScrollIndicator={false}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={weatherStore.loading}
+                      onRefresh={this._refreshWeatherData}
+                      tintColor={'#fff'}
+                      titleColor={'#fff'}
+                      title={weatherStore.loading?"刷新中...":'下拉刷新'}/>}>
                 <Header/>
                <Divider/>
                <HourlyForecast/>

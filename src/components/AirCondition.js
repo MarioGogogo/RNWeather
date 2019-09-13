@@ -4,9 +4,12 @@ import {StyleSheet,Text,View,ImageBackground} from 'react-native';
 import Divider from '../common/Divider'
 import AqiItem from '../common/AqiItem'
 
-
+import { inject, observer } from "mobx-react";
 
 const airColors = ['#73BB4D', '#EBB541', '#FC9B56', '#F17751', '#A94057', '#7B1F3C'];
+
+@inject('weatherStore')
+@observer
 export default class AirCondition extends Component{
 
 
@@ -35,7 +38,8 @@ export default class AirCondition extends Component{
   }
 
   render(){
-   const marginLeftValue = 140
+    const {weatherStore} = this.props;
+
     return (
       <View style={styles.container}>
         <Divider />
@@ -58,8 +62,8 @@ export default class AirCondition extends Component{
         </View>
         <View style={styles.currentIndicator}>
           <ImageBackground source={require('../images/water.png')}
-                 style={[styles.indicatorImage,{tintColor:this._handleIndicatorColor(marginLeftValue),marginLeft:(parseInt(150)+5)}]}>
-            <Text style={styles.indicatorText}>{marginLeftValue}</Text>
+                 style={[styles.indicatorImage,{tintColor:this._handleIndicatorColor(weatherStore.aqi || 0),marginLeft:(parseInt(weatherStore.aqi || 0)+5)}]}>
+            <Text style={styles.indicatorText}>{weatherStore.aqi || 0}</Text>
           </ImageBackground>
         </View>
         <View style={styles.detailColumnContainer}>

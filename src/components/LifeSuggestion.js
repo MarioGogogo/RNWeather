@@ -1,8 +1,12 @@
 
 import React, {Component} from 'react';
-import {StyleSheet,Text,View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import SuggestionItem from '../common/SuggestionItem'
+import { inject, observer } from "mobx-react";
 
+
+@inject('weatherStore')
+@observer
 export default class LifeSuggestion extends Component{
 
   // 初始化state
@@ -11,19 +15,19 @@ export default class LifeSuggestion extends Component{
     this.state = {};
   }
 
-  render(){
-
+  _ItemView = (item,index) => {
     return (
-      <View style={styles.container}>
-        <Text style={[styles.text,{marginLeft:10,fontSize:18,marginBottom:10}]}>今日生活指数</Text>
-        <SuggestionItem index={0}/>
-        <SuggestionItem index={1}/>
-        <SuggestionItem index={2}/>
-        <SuggestionItem index={3}/>
-        <SuggestionItem index={4}/>
-        <SuggestionItem index={5}/>
-        <SuggestionItem index={6}/>
-      </View>
+      <SuggestionItem key={index} itemData={item.item}/>
+    )
+  }
+
+  render(){
+    const {weatherStore} = this.props;
+    return (
+      <FlatList
+        data={weatherStore.lifestyleDataSource.slice()}
+        renderItem={this._ItemView}
+      />
     );
   }
 }

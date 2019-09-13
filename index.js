@@ -7,13 +7,16 @@ import React, {Component} from 'react';
 import Root from './src/Root';
 import {name as appName} from './app.json';
 import { Provider } from 'mobx-react'
-
+import stores from './src/store'
 
 
 export default class App extends Component {
   render() {
     return (
-          <Root/>
+      <Provider {...stores}>
+        <Root/>
+      </Provider>
+
     )
   }
 }

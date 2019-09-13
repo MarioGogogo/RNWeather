@@ -4,6 +4,13 @@ import {StyleSheet,Text,FlatList} from 'react-native';
 import DailyItem from '../common/DailyItem'
 
 
+
+import { inject, observer } from "mobx-react";
+
+
+
+@inject('weatherStore')
+@observer
 export default class DailyForecast extends Component{
 
   // 初始化state
@@ -14,14 +21,15 @@ export default class DailyForecast extends Component{
 
   _ItemView = (item) => {
     return (
-      <DailyItem itemData={item}/>
+      <DailyItem itemData={item.item}/>
     )
   }
 
   render(){
+    const {weatherStore} = this.props;
     return (
       <FlatList
-        data={[1,2,3,4,5,6]}
+        data={weatherStore.dailyDataSource.slice()}
         renderItem={this._ItemView}
       />
     );

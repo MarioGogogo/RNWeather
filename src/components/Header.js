@@ -3,56 +3,34 @@
  import {StyleSheet,Text,View,StatusBar} from 'react-native';
 
 
+ import { inject, observer } from "mobx-react";
+
+
+
+@inject('weatherStore')
+@observer
  export default class Header extends Component{
     // 默认值设置
     static defaultProps = {
 
     };
-    // 初始化state
-    constructor(props){
-        super(props);
-        this.state = {};
-    }
-    // 加载前
-    componentWillMount() {
-        console.log('componentWillMount')
-    }
-    // 加载后
-    componentDidMount() {
-        console.log('componentDidMount')
-    }
-    // 接收改变参数( props或者state改变 )
+
     componentWillReceiveProps(nextProps, nextContext) {
-        console.log('componentWillReceiveProps')
+        console.log('componentWillReceiveProps',nextProps,nextContext)
     }
-    // 是否更新( state改变 )
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        console.log('shouldComponentUpdate')
-        return true;
-    }
-    // 更新前
-    componentWillUpdate(nextProps, nextState, nextContext) {
-        console.log('componentWillUpdate')
-    }
-    // 更新后
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log('componentDidUpdate')
-    }
-    // 移除前
-    componentWillUnmount() {
-        console.log('componentWillUnmount')
-    }
-    render(){
+
+   render(){
+        const {weatherStore} = this.props;
         return (
            <View style={styles.container}>
             <View style={styles.headerCenter}>
-              <Text style={styles.addressText}>上海</Text>
-              <Text style={styles.tempText}>{20+'°C'}</Text>
-              <Text style={styles.condText}>晴</Text>
+              <Text style={styles.addressText}>{weatherStore.currentCityName}</Text>
+              <Text style={styles.tempText}>{weatherStore.tmp+'°C'}</Text>
+              <Text style={styles.condText}>{weatherStore.cond_txt}</Text>
             </View>
             <View style={styles.headerBottom}>
-              <Text style={styles.subText}>空气质量:优良</Text>
-              <Text style={styles.subText}>现在五级</Text>
+              <Text style={styles.subText}>空气质量:{weatherStore.qlty}</Text>
+              <Text style={styles.subText}>{weatherStore.wind_dir+"   风力"+weatherStore.wind_sc+"级"}</Text>
             </View>
           </View>
         );

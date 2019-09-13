@@ -13,17 +13,21 @@
     }
 
     render(){
-        let iconUrl=Config.iconApi+100+'.png';
+
+        const {cond_code,tmp,time}  = this.props.itemData
+         let iconUrl=Config.iconApi+cond_code+'.png';
         return (
           <View style={styles.container}>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>12:00</Text>
+              <Text style={styles.text}>{time}</Text>
             </View>
             <View style={styles.textContainer}>
-              <Image  source={{uri:"http://www.hangge.com/blog/images/logo.png"}}></Image>
+              <Image
+                style={{width: 30, height: 30}}
+                source={{uri:iconUrl}} />
             </View>
             <View style={styles.textContainer}>
-              <Text style={styles.text}>22°C</Text>
+              <Text style={styles.text}>{tmp}°C</Text>
             </View>
           </View>
         );

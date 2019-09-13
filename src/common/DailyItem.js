@@ -13,19 +13,20 @@ export default class HourlyItem extends Component{
   }
 
   render(){
-    let iconUrl=Config.iconApi+100+'.png';
+    let {date, cond_txt_d,cond_code_d,tmp_max,tmp_min  }  = this.props.itemData
+    let iconUrl=Config.iconApi+cond_code_d+'.png';
     return (
       <View style={styles.container}>
         <View style={styles.textContainer}>
-          <Text style={[styles.text,{marginLeft:15}]}>20日</Text>
+          <Text style={[styles.text,{marginLeft:15}]}>{date}日</Text>
           <Text style={[styles.text,{marginLeft:5}]}>今日</Text>
         </View>
         <View style={[styles.textContainer,{justifyContent:'center'}]}>
-          <Image  source={{uri:iconUrl}}></Image>
-          <Text style={[styles.text,{alignSelf:'center',marginLeft:5}]}>晴</Text>
+          <Image style={{width: 30, height: 30}} source={{uri:iconUrl}}/>
+          <Text style={[styles.text,{alignSelf:'center',marginLeft:5}]}>{cond_txt_d}</Text>
         </View>
         <View style={[styles.textContainer,{justifyContent:'flex-end'}]}>
-          <Text style={[styles.text,{marginRight:15}]}>22~23°C</Text>
+          <Text style={[styles.text,{marginRight:15}]}>{tmp_min}~{tmp_max}°C</Text>
         </View>
       </View>
     );
