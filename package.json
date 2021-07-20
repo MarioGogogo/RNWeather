@@ -11,7 +11,7 @@
     "mobx": "^4.3.1",
     "mobx-react": "^5.1.0",
     "react": "16.8.3",
-    "react-native": "0.59.3",
+    "react-native": "0.62.3",
     "react-native-drawer-layout": "^2.0.0",
     "react-native-easy-toast": "^1.2.0",
     "react-native-loading-spinner-overlay": "^1.0.1",
